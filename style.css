@@ -59,10 +59,10 @@ body {
 .app-header {
   background-color: var(--bg-header);
   color: #ffffff;
-  padding: 16px 20px 24px 20px;
-  border-bottom-left-radius: 28px;
-  border-bottom-right-radius: 28px;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  padding: 10px 16px 14px 16px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
   z-index: 10;
 }
 
@@ -91,16 +91,16 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 16px 20px;
-  gap: 4px; /* 스왑 버튼이 겹치므로 타이트하게 조정 */
+  padding: 8px 16px;
+  gap: 2px; /* 스왑 버튼이 겹치므로 타이트하게 조정 */
   overflow-y: auto;
 }
 
 /* 입력/표시 카드 */
 .card {
   background-color: var(--bg-card);
-  border-radius: 24px;
-  padding: 18px 24px;
+  border-radius: 16px;
+  padding: 10px 16px;
   border: 2px solid transparent;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
@@ -178,7 +178,7 @@ body {
   background: transparent;
   text-align: right;
   font-family: var(--font-numeric);
-  font-size: 2.1rem;
+  font-size: 1.7rem;
   font-weight: 600;
   color: var(--txt-main);
   padding: 0;
@@ -208,9 +208,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  margin: 0 auto;
+  width: 26px;
+  height: 26px;
+  margin: -8px auto; /* 음수 마진으로 위아래 카드 간격을 줄여 밀착시킵니다. */
   border-radius: 50%;
   background-color: var(--bg-card);
   border: 1px solid #e2e8f0;
@@ -227,18 +227,18 @@ body {
 }
 
 .swap-btn svg {
-  width: 16px;
-  height: 16px;
+  width: 13px;
+  height: 13px;
 }
 
 /* 하단 키패드 컨테이너 */
 .keypad-container {
   background-color: #f1f5f9;
   border-top: 1px solid #e2e8f0;
-  padding: 16px 20px 24px 20px;
+  padding: 10px 16px 12px 16px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 10px;
 }
 
 /* 키패드 헤더 제어줄 */
@@ -252,10 +252,10 @@ body {
   border: none;
   outline: none;
   font-family: var(--font-sans);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 700;
-  border-radius: 12px;
-  padding: 10px 18px;
+  border-radius: 10px;
+  padding: 6px 12px;
   cursor: pointer;
   transition: all 0.2s ease;
 }
@@ -285,17 +285,17 @@ body {
 .keypad-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
+  gap: 6px;
 }
 
 .key-btn {
   border: none;
   outline: none;
-  height: 52px;
+  height: 42px;
   background-color: var(--bg-key);
-  border-radius: 14px;
+  border-radius: 10px;
   font-family: var(--font-numeric);
-  font-size: 1.4rem;
+  font-size: 1.25rem;
   font-weight: 500;
   color: var(--txt-main);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
