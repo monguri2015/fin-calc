@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <!-- iOS PWA를 위한 뷰포트 설정 (줌 방지, Safe Area 대응) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>수익률 자동 계산기</title>
+  
+  <!-- iOS 웹앱 설정을 위한 메타 태그 -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="수익률 계산기">
+  <link rel="apple-touch-icon" href="icon.png">
+  
+  <!-- PWA manifest -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1e293b">
+
+  <!-- 웹 스타일시트 연결 -->
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- Google Fonts - Outfit & Noto Sans KR -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- 상단 헤더 -->
+    <header class="app-header">
+      <div class="header-content">
+        <svg class="header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+          <line x1="9" y1="22" x2="9" y2="16"></line>
+          <line x1="8" y1="6" x2="16" y2="6"></line>
+          <line x1="16" y1="22" x2="16" y2="16"></line>
+          <line x1="9" y1="16" x2="15" y2="16"></line>
+          <circle cx="8.5" cy="11.5" r="1"></circle>
+          <circle cx="12" cy="11.5" r="1"></circle>
+          <circle cx="15.5" cy="11.5" r="1"></circle>
+        </svg>
+        <h1>수익률 자동 계산기</h1>
+      </div>
+    </header>
+
+    <!-- 계산기 메인 바디 -->
+    <main class="calculator-body">
+      
+      <!-- 카드 1: 원금 -->
+      <div class="card" id="card-principal" data-field="principal" tabindex="0">
+        <div class="card-header">
+          <span class="card-label">원금</span>
+          <span class="status-badge" id="badge-principal">입력 중</span>
+        </div>
+        <div class="card-content">
+          <span class="currency-symbol">₩</span>
+          <input type="text" id="input-principal" class="val-input" readonly placeholder="0" value="1,945,000">
+        </div>
+      </div>
+
+      <!-- 상하 스왑 화살표 1 -->
+      <button class="swap-btn" id="swap-principal-target" aria-label="원금과 변동금액 교환">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M7 4v16M7 20l-4-4M7 20l4-4M17 20V4M17 4l-4 4M17 4l4 4"/>
+        </svg>
+      </button>
+
+      <!-- 카드 2: 변동 금액 -->
+      <div class="card" id="card-target" data-field="target" tabindex="0">
+        <div class="card-header">
+          <span class="card-label">변동 금액</span>
+          <span class="status-badge" id="badge-target">입력 중</span>
+        </div>
+        <div class="card-content">
+          <span class="currency-symbol">₩</span>
+          <input type="text" id="input-target" class="val-input" readonly placeholder="0" value="2,723,000">
+        </div>
+      </div>
+
+      <!-- 상하 스왑 화살표 2 -->
+      <button class="swap-btn" id="swap-target-rate" aria-label="변동금액과 수익률 교환">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M7 4v16M7 20l-4-4M7 20l4-4M17 20V4M17 4l-4 4M17 4l4 4"/>
+        </svg>
+      </button>
+
+      <!-- 카드 3: 차이 (%) -->
+      <div class="card" id="card-rate" data-field="rate" tabindex="0">
+        <div class="card-header">
+          <span class="card-label">차이 (%)</span>
+          <span class="status-badge" id="badge-rate">자동 계산됨</span>
+        </div>
+        <div class="card-content rate-content">
+          <input type="text" id="input-rate" class="val-input highlight-val" readonly placeholder="0" value="40">
+          <span class="percent-symbol">%</span>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- 하단 키패드 영역 (바텀 시트 스타일) -->
+    <section class="keypad-container">
+      <div class="keypad-header">
+        <button id="btn-clear-all" class="header-btn clear-all">전체 지우기</button>
+        <button id="btn-next" class="header-btn next-field">다음 칸 ➔</button>
+      </div>
+      
+      <div class="keypad-grid">
+        <button class="key-btn" data-val="1">1</button>
+        <button class="key-btn" data-val="2">2</button>
+        <button class="key-btn" data-val="3">3</button>
+        <button class="key-btn action-key" data-val="backspace" aria-label="백스페이스">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+            <path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0 -2-2z"></path>
+            <line x1="18" y1="9" x2="12" y2="15"></line>
+            <line x1="12" y1="9" x2="18" y2="15"></line>
+          </svg>
+        </button>
+
+        <button class="key-btn" data-val="4">4</button>
+        <button class="key-btn" data-val="5">5</button>
+        <button class="key-btn" data-val="6">6</button>
+        <button class="key-btn action-key clear-key" data-val="clear-field">C</button>
+
+        <button class="key-btn" data-val="7">7</button>
+        <button class="key-btn" data-val="8">8</button>
+        <button class="key-btn" data-val="9">9</button>
+        <button class="key-btn action-key" data-val="toggle-sign">+/-</button>
+
+        <button class="key-btn" data-val=".">.</button>
+        <button class="key-btn" data-val="0">0</button>
+        <button class="key-btn" data-val="00">00</button>
+        <button class="key-btn enter-key" data-val="enter">입력</button>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- 서비스 워커 등록 스크립트 -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+          .then(reg => console.log('Service Worker 등록 완료:', reg.scope))
+          .catch(err => console.error('Service Worker 등록 실패:', err));
+      });
+    }
+  </script>
+  
+  <!-- 메인 애플리케이션 로직 -->
+  <script src="app.js"></script>
+</body>
+</html>
