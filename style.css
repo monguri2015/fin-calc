@@ -38,6 +38,8 @@ body {
   font-family: var(--font-sans);
   background-color: var(--bg-app);
   color: var(--txt-main);
+  height: 100vh;
+  height: 100dvh;
   overflow: hidden; /* 모바일 화면 스크롤 방지 */
 }
 
@@ -53,6 +55,7 @@ body {
   margin: 0 auto;
   background-color: var(--bg-app);
   position: relative;
+  overflow: hidden; /* 컨테이너 자체 스크롤 원천 차단 */
 }
 
 /* 상단 헤더 */
@@ -90,8 +93,8 @@ body {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: 12px 20px;
+  justify-content: space-evenly; /* 카드 상하 간격을 화면 높이에 맞게 균등 배분하여 쏠림 방지 */
+  padding: 8px 20px;
   gap: 4px; /* 스왑 버튼이 겹치므로 타이트하게 조정 */
   overflow-y: auto;
 }
@@ -235,10 +238,10 @@ body {
 .keypad-container {
   background-color: #f1f5f9;
   border-top: 1px solid #e2e8f0;
-  padding: 16px 20px 24px 20px;
+  padding: 14px 20px 10px 20px; /* 아래쪽 패딩을 10px로 줄여 숫자 키를 화면 아래로 더 밀착시킴 */
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
 }
 
 /* 키패드 헤더 제어줄 */
@@ -350,4 +353,36 @@ body {
 
 .active-input {
   animation: none;
+}
+
+/* 📱 브라우저 상하 툴바가 켜져 화면 높이가 좁아진 모바일 대응 (반응형 최적화) */
+@media (max-height: 780px) {
+  .key-btn {
+    height: 48px; /* 좁은 화면에서는 키패드 버튼 높이를 줄임 */
+    border-radius: 12px;
+    font-size: 1.3rem;
+  }
+  .keypad-grid {
+    gap: 8px; /* 버튼 사이 간격 축소 */
+  }
+  .keypad-container {
+    padding: 10px 16px 8px 16px;
+    gap: 8px;
+  }
+  .header-btn {
+    padding: 6px 12px;
+    border-radius: 10px;
+  }
+  .card {
+    padding: 10px 16px;
+    border-radius: 16px;
+  }
+  .val-input {
+    font-size: 1.7rem;
+  }
+  .swap-btn {
+    width: 26px;
+    height: 26px;
+    margin: -8px auto;
+  }
 }
