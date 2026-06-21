@@ -35,9 +35,9 @@ const keypadContainer = document.querySelector('.keypad-grid');
 // 애플리케이션 상태 (State)
 // 기본 데이터: 원금=1,945,000, 변동금액=2,723,000, 수익률=40
 let rawValues = {
-  principal: '1945000',
-  target: '2723000',
-  rate: '40'
+  principal: '0',
+  target: '0',
+  rate: '0'
 };
 
 // 입력 순서 이력 관리 (최근 수정된 2개 필드가 입력값(Input)이 되고, 나머지 하나가 결과값(Output)이 됨)
