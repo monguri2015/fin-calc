@@ -208,7 +208,7 @@ function calculate() {
 
   if (outputField === 'rate') {
     // 수익률(차이%) 계산: (변동금액 - 원금) / 원금 * 100
-    if (p !== 0) {
+    if (p !== 0 && t !== 0) {
       const calcRate = ((t - p) / p) * 100;
       rawValues.rate = formatComputedValue(calcRate);
     } else {
