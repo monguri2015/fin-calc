@@ -86,23 +86,9 @@ function setupEventListeners() {
   btnNext.addEventListener('click', focusNext);
 }
 
-// 포커스 설정
+// 포커스 설정 (단순 터치/포커스 이동 시에는 입력/계산 역할을 변경하지 않고 테두리 강조만 이동)
 function setFocus(field) {
   focusedField = field;
-  
-  // 현재 포커스된 필드를 입력 이력의 가장 최근(뒤쪽)으로 이동
-  const index = inputHistory.indexOf(field);
-  if (index > -1) {
-    // 이미 이력에 있으면 순서만 최신으로 변경
-    inputHistory.splice(index, 1);
-    inputHistory.push(field);
-  } else {
-    // 이력에 없으면(즉, 기존 자동 계산 필드였으면)
-    // 가장 오래된 입력을 이력에서 제거하고 새로운 필드를 추가
-    inputHistory.shift();
-    inputHistory.push(field);
-  }
-
   updateUI();
 }
 
@@ -141,9 +127,29 @@ function swapValues(field1, field2) {
   calculate();
 }
 
+// 입력 필드 이력 등록 (실제 값 변경이 일어날 때만 역할을 전환하도록 수행)
+function registerInput(field) {
+  const index = inputHistory.indexOf(field);
+  if (index > -1) {
+    // 이미 이력에 있으면 순서만 최신으로 변경
+    inputHistory.splice(index, 1);
+    inputHistory.push(field);
+  } else {
+    // 이력에 없으면(즉, 기존 자동 계산 필드였으면)
+    // 가장 오래된 입력을 이력에서 제거하고 새로운 필드를 추가
+    inputHistory.shift();
+    inputHistory.push(field);
+  }
+}
+
 // 키패드 입력 처리
 function handleKeyPress(key) {
   let val = rawValues[focusedField];
+
+  // enter가 아닌 경우(실제 키패드 값 입력/수정인 경우)에만 입력 이력(inputHistory)을 갱신
+  if (key !== 'enter') {
+    registerInput(focusedField);
+  }
 
   switch (key) {
     case 'backspace':
